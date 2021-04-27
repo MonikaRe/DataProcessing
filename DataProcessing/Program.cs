@@ -26,7 +26,7 @@ namespace DataProcessing
             name = c[0];
             surname = c[1];
 
-            //As per task, student homework results are stored in either array or list. For that, there are different methods. Select which one.
+            //As per task, student homework results are stored in either array or list. For that, there are different methods. Select which one. v0.2
 
             //With list:
 
