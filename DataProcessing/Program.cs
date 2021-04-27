@@ -42,7 +42,7 @@ namespace DataProcessing
             */
 
 
-            Console.WriteLine("Enter the result of exam");
+            Console.WriteLine("Enter the result of the exam");
             string input2 = Console.ReadLine();
             float.TryParse(input2, out exam_result);
 
