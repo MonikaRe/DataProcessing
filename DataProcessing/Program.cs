@@ -20,7 +20,10 @@ namespace DataProcessing
 
             Methods m = new Methods();
 
-            Console.WriteLine("Enter name and surname");
+            m.readFromFile();
+            m.fromFileToScreen();
+
+            /*Console.WriteLine("Enter name and surname");
             string input = Console.ReadLine();
             string[] c = input.Split(' ');
             name = c[0];
@@ -36,10 +39,10 @@ namespace DataProcessing
 
 
             //With Simple array
-            /*int[] homeworks = m.SimpleArray();
+            int[] homeworks = m.SimpleArray();
             homeworks_average = homeworks.Sum() / homeworks.Length;
             homeworks_median = m.CalculateMedianFromArray(homeworks);
-            */
+            
 
 
             Console.WriteLine("Enter the result of exam");
@@ -56,7 +59,7 @@ namespace DataProcessing
             {
                 final_points = 0.3 * homeworks_median + 0.7 * exam_result;
             }
-            Console.Write(surname + " " + name + " " + final_points);
+            Console.Write(surname + " " + name + " " + final_points);*/
 
             Console.ReadLine();
         }
