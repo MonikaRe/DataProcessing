@@ -31,7 +31,6 @@ namespace DataProcessing
             //With list:
 
             List<int> homeworks = m.List();
-            //homeworks = m.List();
             homeworks_average = homeworks.Sum() / homeworks.Count();
             homeworks_median = m.CalculateMedianFromList(homeworks);
 
