@@ -9,13 +9,14 @@ namespace DataProcessing
 {
     class Methods
     {
-        List<Student> AllStudents = new List<Student>();
+        //List<Student> AllStudents = new List<Student>();
         //Method to read input from a file and save to a list of Student
-        public void readFromFile()
+        public List<Student> readFromFile(string path)
         {
+            List<Student> AllStudents = new List<Student>();
             try
             {
-                string[] lines = File.ReadAllLines("C:/Users/Monika/Desktop/C#/DataProcessing/Data.txt");
+                string[] lines = File.ReadAllLines(path);
                 foreach (string line in lines)
                 {
                     string[] columns = line.Split(' ');
@@ -40,7 +41,7 @@ namespace DataProcessing
                     }
                     
                 }
-                fromFileToScreen();
+                
             }
             catch (FileNotFoundException)
             {
@@ -54,6 +55,7 @@ namespace DataProcessing
             {
                 Console.WriteLine("The file could not be opened");
             }
+            return AllStudents;
         }
 
         //Method to print top of the output
@@ -79,30 +81,27 @@ namespace DataProcessing
         }
 
         //Method to show input from a file on the screen
-        public void fromFileToScreen()
+        public void fromFileToScreen(List<Student> AllStudents)
         {
             PrintTop();
-            SortList(AllStudents);
+            //SortList(AllStudents);
             foreach (Student s in AllStudents)
             {
                 int left2 = Console.CursorLeft;
                 int top2 = Console.CursorTop;
                 Console.Write(s.Surname);
-                Console.SetCursorPosition(left2 + 10, top2);
+                Console.SetCursorPosition(left2 + 20, top2);
                 Console.Write(s.Name);
-                Console.SetCursorPosition(left2 + 30, top2);
+                Console.SetCursorPosition(left2 + 40, top2);
                 double homeworks_average = s.Homeworks.Sum() / s.Homeworks.Count();
                 double final_points_average = 0.3 * homeworks_average + 0.7 * s.Exam;
                 Console.Write(Math.Round(final_points_average,2));
-                Console.SetCursorPosition(left2 + 50, top2);
+                Console.SetCursorPosition(left2 + 60, top2);
                 double homeworks_median = CalculateMedianFromList(s.Homeworks);
                 double final_points_median = 0.3 * homeworks_median + 0.7 * s.Exam;
                 Console.WriteLine(Math.Round(final_points_median,2));
             }
-
         } 
-
-
         
         //Method to store user input in a list
         public List<double> List()
@@ -188,12 +187,6 @@ namespace DataProcessing
             return median;
         }
 
-        //Random number generator
-        public int RandomNumber()
-        {
-            Random r = new Random();
-            int num = r.Next(11);
-            return num;
-        }
+
     }
 }
