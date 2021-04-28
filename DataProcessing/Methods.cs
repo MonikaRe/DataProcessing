@@ -15,7 +15,7 @@ namespace DataProcessing
         {
             try
             {
-                string[] lines = File.ReadAllLines("C:/Users/Monika/Desktop/C#/DataProcessing/Data2.txt");
+                string[] lines = File.ReadAllLines("C:/Users/Monika/Desktop/C#/DataProcessing/Data.txt");
                 foreach (string line in lines)
                 {
                     string[] columns = line.Split(' ');
