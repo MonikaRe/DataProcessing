@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,19 +13,49 @@ namespace DataProcessing
         //Method to read input from a file and save to a list of Student
         public void readFromFile()
         {
-            string[] lines = System.IO.File.ReadAllLines("C:/Users/Monika/Desktop/C#/DataProcessing/Data.txt");
-            foreach(string line in lines)
+            try
             {
-                string[] columns = line.Split(' ');
-                List<double> homeworks = new List<double>();
-                for (int i=2;i<columns.Length-1;i++)
+                string[] lines = File.ReadAllLines("C:/Users/Monika/Desktop/C#/DataProcessing/Data2.txt");
+                foreach (string line in lines)
                 {
-                    homeworks.Add(Int32.Parse(columns[i]));
+                    string[] columns = line.Split(' ');
+                    List<double> homeworks = new List<double>();
+                    for (int i = 2; i < columns.Length - 1; i++)
+                    {
+                        try
+                        { homeworks.Add(Int32.Parse(columns[i])); }
+                        catch //(FormatException)
+                        {
+                            Console.WriteLine("One of the marks is invalid in line " + line);
+                        }
+                    }
+                    try
+                    {
+                        Student A = new Student(columns[0], columns[1], homeworks, float.Parse(columns[columns.Length - 1]));
+                        AllStudents.Add(A);
+                    }
+                    catch 
+                    {
+                        Console.WriteLine("One of the marks is missing/is invalid in line " + line);
+                    }
+                    
                 }
-                Student A = new Student(columns[0], columns[1], homeworks, float.Parse(columns[columns.Length-1]));
-                AllStudents.Add(A);
+                fromFileToScreen();
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("The file was not found");
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("The directory was not found");
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("The file could not be opened");
             }
         }
+
         //Method to print top of the output
         public void PrintTop()
         {
@@ -40,7 +71,7 @@ namespace DataProcessing
             Console.WriteLine("-----------------------------------------------------------");
 
         }
-
+        //Method to sort the list of students by name 
         public List<Student> SortList(List<Student> AllStudents)
         {
             AllStudents.Sort((p1, p2) => string.Compare(p1.Name, p2.Name, true));
@@ -56,9 +87,9 @@ namespace DataProcessing
             {
                 int left2 = Console.CursorLeft;
                 int top2 = Console.CursorTop;
-                Console.Write(s.Name);
-                Console.SetCursorPosition(left2 + 10, top2);
                 Console.Write(s.Surname);
+                Console.SetCursorPosition(left2 + 10, top2);
+                Console.Write(s.Name);
                 Console.SetCursorPosition(left2 + 30, top2);
                 double homeworks_average = s.Homeworks.Sum() / s.Homeworks.Count();
                 double final_points_average = 0.3 * homeworks_average + 0.7 * s.Exam;
@@ -74,9 +105,9 @@ namespace DataProcessing
 
         
         //Method to store user input in a list
-        public List<int> List()
+        public List<double> List()
         {
-            List<int> homeworks = new List<int>();
+            List<double> homeworks = new List<double>();
             string[] marks;
             int temp;
             Console.WriteLine("Enter homework marks, separated by space");
@@ -84,8 +115,17 @@ namespace DataProcessing
             marks = input.Split(' ');
             foreach (string i in marks)
             {
-                temp = int.Parse(i);
-                homeworks.Add(temp);
+                try
+                {
+                    temp = int.Parse(i);
+                    homeworks.Add(temp);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input. Please check if you separated marks by space or if one of the marks is invalid");
+                    Console.ReadLine();
+                    Environment.Exit(1);
+                }
             }
             return homeworks;
         }
@@ -100,7 +140,17 @@ namespace DataProcessing
             int[] homeworks = new int[n];
             for (int i = 0; i < n; i++)
             {
-                homeworks[i] = int.Parse(marks[i]);
+                try
+                {
+                    homeworks[i] = int.Parse(marks[i]);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input. Please check if you separated marks by space or if one of the marks is invalid");
+                    Console.ReadLine();
+                    Environment.Exit(1);
+                }
+                
             }
             return homeworks;
 
